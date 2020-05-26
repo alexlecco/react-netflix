@@ -1,7 +1,7 @@
 import React from 'react';
 import { MovieCard, Jumbotron, Carousel } from '../components';
 
-const Home = ({ movieJumbotron, favoriteList, onAddListPressed, movies }) => (
+const Home = ({ movieJumbotron, favoriteList, onAddListPressed, data }) => (
   <div className="home-container">
     <Jumbotron
       movie={movieJumbotron}
@@ -9,10 +9,10 @@ const Home = ({ movieJumbotron, favoriteList, onAddListPressed, movies }) => (
       onAddListPressed={movie => onAddListPressed(movie)}
     />
 
-    <Carousel title="Nos Cinemas">
-      {movies.lastestMovies.map(movie => (
+    <Carousel title="Series de zombies">
+      {data.filter(movie => movie.genre === 'zombies').map(movie => (
         <MovieCard
-          key={movie.id}
+          key={movie._id}
           movie={movie}
           favoriteList={favoriteList}
           onAddListPressed={movie => onAddListPressed(movie)}
@@ -20,43 +20,10 @@ const Home = ({ movieJumbotron, favoriteList, onAddListPressed, movies }) => (
       ))}
     </Carousel>
 
-    <Carousel title="Os melhores para te dar aquele susto">
-      {movies.horrorMovies.map(movie => (
+    <Carousel title="Series de tecnología">
+      {data.filter(movie => movie.genre === 'technology').map(movie => (
         <MovieCard
-          key={movie.id}
-          movie={movie}
-          favoriteList={favoriteList}
-          onAddListPressed={movie => onAddListPressed(movie)}
-        />
-      ))}
-    </Carousel>
-
-    <Carousel title="Para chorar de rir">
-      {movies.comedyMovies.map(movie => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          favoriteList={favoriteList}
-          onAddListPressed={movie => onAddListPressed(movie)}
-        />
-      ))}
-    </Carousel>
-
-    <Carousel title="Filmes que farão você viajar em outro mundo">
-      {movies.scifiMovies.map(movie => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          favoriteList={favoriteList}
-          onAddListPressed={movie => onAddListPressed(movie)}
-        />
-      ))}
-    </Carousel>
-
-    <Carousel title="Animações para relaxar sua tarde">
-      {movies.animationMovies.map(movie => (
-        <MovieCard
-          key={movie.id}
+          key={movie._id}
           movie={movie}
           favoriteList={favoriteList}
           onAddListPressed={movie => onAddListPressed(movie)}

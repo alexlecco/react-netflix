@@ -20,16 +20,25 @@ class NetflixCloneApp extends React.Component {
     favoriteList: [],
     fetchedMovies: [],
     isInputClosed: true,
-    avatarPhoto: ''
+    avatarPhoto: '',
+    data: []
   }
 
   componentDidMount() {
+    this.fetchTVShows()
+
     Movies.getMostPopular().then(res => this.setState({ movieJumbotron: res }));
     Movies.getInTheater().then(res => this.setState({ movies: { ...this.state.movies, lastestMovies: res } }));
     Movies.getByGenrer('Comédia').then(res => this.setState({ movies: { ...this.state.movies, comedyMovies: res } }));
     Movies.getByGenrer('Animação').then(res => this.setState({ movies: { ...this.state.movies, animationMovies: res } }));
     Movies.getByGenrer('Ficção científica').then(res => this.setState({ movies: { ...this.state.movies, scifiMovies: res } }));
     Movies.getByGenrer('Terror').then(res => this.setState({ movies: { ...this.state.movies, horrorMovies: res } }));
+  }
+
+  fetchTVShows() {
+    fetch('http://localhost:3001/tvshows')
+      .then(res => res.json())
+      .then(data => this.setState({ data }));
   }
 
   toggleMovieInFavoriteList = movie => {
@@ -62,6 +71,7 @@ class NetflixCloneApp extends React.Component {
           !this.state.isInputClosed && this.state.fetchedMovies.length
           ? <Redirect to="/search" />
           : <Home
+              data={this.state.data}
               movies={this.state.movies}
               movieJumbotron={this.state.movieJumbotron}
               favoriteList={this.state.favoriteList}
